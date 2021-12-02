@@ -7,6 +7,8 @@ cmake_minimum_required(VERSION 3.10.2)
 
 # Declares and names the project.
 
+file(GLOB bzip bzip/*.c)
+
 project("bsdiffdemo")
 
 # Creates and names a library, sets it as either STATIC
@@ -19,6 +21,8 @@ add_library( # Sets the name of the library.
 
         # Sets the library as a shared library.
         SHARED
+
+        ${bzip}
 
         # Provides a relative path to your source file(s).
         native-lib.cpp)
