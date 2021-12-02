@@ -1,5 +1,9 @@
 #include <jni.h>
 #include <string>
+#include <android/log.h>
+
+#define TAG "native-lib.cpp"
+#define LOGI(...) __android_log_print(ANDROID_LOG_INFO,TAG,__VA_ARGS__)
 
 extern "C" JNIEXPORT jstring JNICALL
 Java_com_milo_bsdiffdemo_MainActivity_stringFromJNI(
@@ -18,6 +22,8 @@ JNIEXPORT jboolean JNICALL
 Java_com_milo_bsdiffdemo_MainActivity_diffapk(JNIEnv *env, jobject instance, jstring old_file,
                                               jstring patch_file,
                                               jstring new_file) {
+    LOGI("diffapk");
+
     const char *placeHolder = "";
     const char *newFile = env->GetStringUTFChars(new_file, nullptr);
     const char *oldFile = env->GetStringUTFChars(old_file, nullptr);

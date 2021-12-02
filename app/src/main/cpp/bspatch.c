@@ -28,13 +28,17 @@
 __FBSDID("$FreeBSD: src/usr.bin/bsdiff/bspatch/bspatch.c,v 1.1 2005/08/06 01:59:06 cperciva Exp $");
 #endif
 
-#include <bzlib.h>
+#include "bzip/bzlib.h"
 #include <stdlib.h>
-#include <stdio.h>
+#include "stdio.h"
 #include <string.h>
 #include <err.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <android/log.h>
+
+#define TAG "native-lib.cpp"
+#define LOGI(...) __android_log_print(ANDROID_LOG_INFO,TAG,__VA_ARGS__)
 
 static off_t offtin(u_char *buf)
 {
@@ -56,6 +60,8 @@ static off_t offtin(u_char *buf)
 
 int main(int argc,char * argv[])
 {
+	LOGI("main");
+
 	FILE * f, * cpf, * dpf, * epf;
 	BZFILE * cpfbz2, * dpfbz2, * epfbz2;
 	int cbz2err, dbz2err, ebz2err;
@@ -72,8 +78,10 @@ int main(int argc,char * argv[])
 	if(argc!=4) errx(1,"usage: %s oldfile newfile patchfile\n",argv[0]);
 
 	/* Open patch file */
-	if ((f = fopen(argv[3], "r")) == NULL)
-		err(1, "fopen(%s)", argv[3]);
+	if ((f = fopen(argv[3], "r")) == NULL){
+		LOGI("文件访问错误%s", argv[3]);
+		return -1;
+	}
 
 	/*
 	File format:
@@ -96,9 +104,13 @@ int main(int argc,char * argv[])
 		err(1, "fread(%s)", argv[3]);
 	}
 
+	LOGI("main -- here -- 106");
+
 	/* Check for appropriate magic */
 	if (memcmp(header, "BSDIFF40", 8) != 0)
 		errx(1, "Corrupt patch\n");
+
+	LOGI("main -- here -- 112");
 
 	/* Read lengths from header */
 	bzctrllen=offtin(header+8);
@@ -106,6 +118,8 @@ int main(int argc,char * argv[])
 	newsize=offtin(header+24);
 	if((bzctrllen<0) || (bzdatalen<0) || (newsize<0))
 		errx(1,"Corrupt patch\n");
+
+	LOGI("main -- here -- 116");
 
 	/* Close patch file and re-open it via libbzip2 at the right places */
 	if (fclose(f))

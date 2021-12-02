@@ -19,6 +19,8 @@ allprojects {
         jcenter()
         mavenCentral()
         maven { url "https://maven.aliyun.com/repository/google"}
+        maven { url NEXUS_REPOSITORY_URL }
+        maven { url NEXUS_SNAPSHOT_REPOSITORY_URL }
     }
 }
 
