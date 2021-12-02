@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <external-path
+        name="apk_root"
+        path="Android/data/com.ishowedu.peiyin/" />
+    <external-path
+        name="external_storage_root_test"
+        path="iShowdubbingTest" />
+    <external-path
+        name="external_storage_root"
+        path="iShowdubbing" />
+    <external-path
+        name="external_storage_root_justalk"
+        path="ishowdubing_justalk" />
+    <external-path
+        name="external_storage_download"
+        path="Download" />
+</paths>
