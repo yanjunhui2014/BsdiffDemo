@@ -51,14 +51,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         TextView tv = binding.sampleText;
         tv.setText("你好 c++");
+        getExternalFilesDir("bsdiff").mkdirs();
     }
 
 
     @Override
     public void onClick(View v) {
-        String oldApk = this.getExternalFilesDir("bsdiff") + "/old.apk";
-        String patchApk = this.getExternalFilesDir("bsdiff") + "/patch.apk";
-        String newApk = this.getExternalFilesDir("bsdiff") + "/new.apk";
+        String oldApk = this.getExternalFilesDir("bsdiff").getAbsolutePath() + "/old.apk";
+        String patchApk = this.getExternalFilesDir("bsdiff").getAbsolutePath() + "/patch.apk";
+        String newApk = this.getExternalFilesDir("bsdiff").getAbsolutePath() + "/new.apk";
 
         if (Build.VERSION.SDK_INT >= 23 && checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 100);
